@@ -20,13 +20,11 @@ public class SearchBar extends JTextField {
         setForeground(Color.GRAY);
         setFont(new Font("Grauda", Font.PLAIN, 16));
 
-
         // Add a focus listener to handle placeholder text
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                isClicked = true;
-                if (getText().equals("Search...")) {
+                if (!isClicked && getText().equals("Search...")) {
                     setText("");
                     setForeground(Color.BLACK);
                 }
@@ -34,10 +32,10 @@ public class SearchBar extends JTextField {
 
             @Override
             public void focusLost(FocusEvent e) {
-                isClicked = false;
                 if (getText().isEmpty()) {
                     setText("Search...");
                     setForeground(Color.GRAY);
+                    isClicked = false;
                 }
             }
         });
@@ -45,18 +43,11 @@ public class SearchBar extends JTextField {
         // Add a mouse listener to handle hover effect
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
+                isClicked = true;
                 if (getText().equals("Search...")) {
                     setText("");
                     setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (!isClicked && getText().isEmpty()) {
-                    setText("Search...");
-                    setForeground(Color.GRAY);
                 }
             }
         });
@@ -82,5 +73,4 @@ public class SearchBar extends JTextField {
             g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15); // Rounded rectangle
         }
     }
-
 }

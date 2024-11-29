@@ -31,7 +31,7 @@ public class TeacherModel {
         return contactInfo;
     }
 
-    public String getTeacherClass() {
+    public String getClassIncharge() {
         return teacherClass;
     }
 
@@ -45,4 +45,6 @@ public class TeacherModel {
                 ", teacherClass='" + teacherClass + '\'' +
                 '}';
     }
+
+
 }

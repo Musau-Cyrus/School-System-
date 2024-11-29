@@ -59,6 +59,7 @@ public class StudentController {
         }
 
         studentDAO.insertStudent(id, name, age, studentClass, contactInfo);
+        studentView.populateTable(studentDAO.getAllStudents());
         JOptionPane.showMessageDialog(null, "Student inserted successfully!");
         loadStudents(); // Refreshes the table after saving
         studentView.clearFields(); // Clears textFields after saving

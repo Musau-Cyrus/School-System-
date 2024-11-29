@@ -1,5 +1,7 @@
 package view;
 
+import util.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,48 +18,58 @@ public class Admin extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        Color myrtleGreen = new Color( 79, 151, 163);
+
         sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBackground(Color.gray);
+        sidebar.setBackground(new Color(75, 156, 211));
         sidebar.setPreferredSize(new Dimension(200, getHeight()));
 
-        student = new JButton();
-        student.setText("STUDENT");
-        student.setPreferredSize(new Dimension(50, 50));
-        student.setBorderPainted(false);
+        student = new CustomButton("STUDENT", myrtleGreen, Color.WHITE);
+       // student.setText("STUDENT");
+        //student.setPreferredSize(new Dimension(50, 50));
+        //student.setBorderPainted(false);
+        setButtonFullWidth(student, 200, 20);
         student.setFocusPainted(false);
         student.setToolTipText("Click to Register new Student");
         sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(student);
 
-        classes = new JButton();
-        classes.setText("CLASSES");
-        classes.setPreferredSize(new Dimension(50, 50));
+        classes = new CustomButton("CLASSES", myrtleGreen, Color.WHITE);
+        //classes.setText("CLASSES");
+        //classes.setPreferredSize(new Dimension(50, 50));
+        setButtonFullWidth(classes, 200, 20);
         classes.setFocusPainted(false);
         sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(classes);
 
-        teacher = new JButton();
-        teacher.setText("TEACHER");
-        teacher.setPreferredSize(new Dimension(50, 50));
+        teacher = new CustomButton("TEACHER", myrtleGreen, Color.WHITE);
+        //teacher.setText("TEACHER");
+        //teacher.setPreferredSize(new Dimension(50, 50));
+        setButtonFullWidth(teacher, 200, 20);
         teacher.setFocusPainted(false);
         sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(teacher);
 
-        calender = new JButton();
-        calender.setText("CALENDER");
-        calender.setPreferredSize(new Dimension(50, 50));
+        calender = new CustomButton("CALENDER", myrtleGreen, Color.WHITE);
+        //calender.setText("CALENDER");
+        //calender.setPreferredSize(new Dimension(50, 50));
+        setButtonFullWidth(calender, 200, 20);
         calender.setFocusPainted(false);
         sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(calender);
 
-        logout = new JButton();
-        logout.setText("LOGOUT");
+
+        logout = new CustomButton("LOGOUT", myrtleGreen, Color.WHITE);
+        //logout.setText("LOGOUT");
         logout.setBackground(Color.MAGENTA);
-        logout.setPreferredSize(new Dimension(50, 50));
+        //logout.setPreferredSize(new Dimension(50, 50));
         logout.setFocusPainted(false);
         sidebar.add(Box.createVerticalStrut(50));
+        setButtonFullWidth(logout, 200, 20);
         sidebar.add(logout);
+        //sidebar.add(Box.createHorizontalGlue());
+        sidebar.add(Box.createHorizontalStrut(50));
 
         cardLayout = new CardLayout();
         mainpanel = new JPanel(cardLayout);
@@ -158,11 +170,24 @@ public class Admin extends JFrame {
         return cardLayout;
     }
 
-    public void setCardLayout(CardLayout cardLayout) {
-        this.cardLayout = cardLayout;
-    }
+//    public void setCardLayout(CardLayout cardLayout) {
+//        this.cardLayout = cardLayout;
+//    }
 
     public Container getMainPanel() {
         return mainpanel;
     }
+    private void setButtonFullWidth(JButton button, int width, int height) {
+        button.setMaximumSize(new Dimension(width, height));
+        button.setPreferredSize(new Dimension(width, height));
+        button.setMinimumSize(new Dimension(width, height));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT); // Centers the button horizontally in BoxLayout
+
+        button.setOpaque(true);
+        button.setBackground(button.getParent() != null ? button.getParent().getBackground() : new Color(75, 156, 211)); // Default to gray if no parent
+        button.setForeground(Color.WHITE); // Keep text white for contrast
+        button.setBorderPainted(false); // Remove borders for a cleaner look
+        button.setFont(new Font("Arial", Font.BOLD, 14)); // Consistent font
+    }
+
 }

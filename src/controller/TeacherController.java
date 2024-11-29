@@ -8,6 +8,9 @@ import view.TeacherView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 public class TeacherController {
@@ -17,8 +20,15 @@ public class TeacherController {
 
     public TeacherController(TeacherView teacherView, Admin adminView) {
         this.teacherView = teacherView;
-        this.teacherDAO = new TeacherDAO();
         this.adminView = adminView;
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/school", "root", "");
+            this.teacherDAO = new TeacherDAO(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: Unable to connect to the database.");
+            return;
+        }
 
         this.teacherView.addButtonListener(new ButtonActionListener());
         loadTeachers();
@@ -53,6 +63,39 @@ public class TeacherController {
         String classIncharge = teacherView.getClassIncharge();
         String contactInfo = teacherView.getContactInfo();
 
+        if (id.isEmpty() || name.isEmpty() || contactInfo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: All fields except Class Incharge must be filled out.");
+            return;
+        }
+
+        // Set classIncharge to null if "None" is selected
+        if ("None".equals(classIncharge)) {
+            classIncharge = null;
+        }
+
+        TeacherModel teacher = new TeacherModel(id, name, classIncharge, contactInfo);
+
+        try {
+            teacherDAO.insertTeacher(id, name, classIncharge, contactInfo);
+            if (classIncharge != null) {
+                teacherDAO.updateTeacherClass(id, classIncharge);
+            }
+            JOptionPane.showMessageDialog(null, "Teacher inserted successfully!");
+            loadTeachers(); // Refreshes the table after saving
+            teacherView.clearFields();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: Unable to insert teacher.");
+        }
+
+    }
+
+    private void handleSave1() {
+        String id = teacherView.getId();
+        String name = teacherView.getName();
+        String classIncharge = teacherView.getClassIncharge();
+        String contactInfo = teacherView.getContactInfo();
+
         if (id.isEmpty() || name.isEmpty() || classIncharge.isEmpty() || contactInfo.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Error: All fields must be filled out.");
             return;
@@ -81,7 +124,7 @@ public class TeacherController {
         adminView.getCardLayout().show(adminView.getMainPanel(), "AdminContents");
     }
 
-    private void loadTeachers() {
+    public void loadTeachers() {
         List<TeacherModel> teachers = teacherDAO.getAllTeachers();
         teacherView.populateTable(teachers);
     }

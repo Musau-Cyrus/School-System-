@@ -32,7 +32,7 @@ public class StudentDAO {
     }
 
     private boolean classExists(String classId) {
-        String query = "SELECT 1 FROM class WHERE class_id = ?";
+        String query = "SELECT 1 FROM class WHERE class = ?";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, classId);
@@ -78,12 +78,12 @@ public class StudentDAO {
 
     public List<String> getAllClasses() {
         List<String> classes = new ArrayList<>();
-        String query = "SELECT DISTINCT student_class FROM student";
+        String query = "SELECT DISTINCT class FROM class";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = conn.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                classes.add(resultSet.getString("student_class"));
+                classes.add(resultSet.getString("class"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

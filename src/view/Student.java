@@ -4,6 +4,7 @@ import controller.StudentController;
 import model.Data.StudentDAO;
 import model.StudentModel;
 import util.DataFilter;
+import util.CustomTextField;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,19 +12,22 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.List;
+
 
 public class Student extends JPanel {
     private JTable studentTable;
     private JScrollPane scrollPane;
     private TableRowSorter<StudentTableModel> rowSorter;
     private JPanel formPanel, buttonPanel, searchPanel;
-    private JTextField idField, nameField, ageField, classField, contactField;
+    private JTextField idField, nameField, ageField, contactField;
     private JButton save, update, delete, back;
     private StudentTableModel studentTableModel;
     private SearchBar searchBar;
     private JComboBox<String> classComboBox;
+    private CustomTextField searchField;
+    private String idPlaceholder, namePlaceholder, agePlaceholder, contactPlaceholder, prefix;
 
     public Student() {
         setLayout(new BorderLayout());
@@ -33,16 +37,175 @@ public class Student extends JPanel {
         formPanel.setBackground(Color.WHITE);
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        idPlaceholder = "Enter Student ID";
+        namePlaceholder = "Enter Student Name";
+        agePlaceholder = "Enter Student Age";
         formPanel.add(new JLabel("ID:"));
-        idField = new JTextField();
+        idField = new CustomTextField(20, 15,15);
+        idField.setText(idPlaceholder);
+        idField.setForeground(Color.GRAY);
+        idField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (idField.getText().equals(idPlaceholder)) {
+                    idField.setText("");
+                    idField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (idField.getText().isEmpty()) {
+                    idField.setText(idPlaceholder);
+                    idField.setForeground(Color.GRAY);
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                }
+            }
+        });
+        idField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (idField.getText().equals(idPlaceholder)) {
+                    idField.setText("");
+                    idField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (idField.getText().isEmpty()) {
+                    idField.setText(idPlaceholder);
+                    idField.setForeground(Color.GRAY);
+                }
+            }
+        });
         formPanel.add(idField);
 
         formPanel.add(new JLabel("Name:"));
-        nameField = new JTextField();
+        nameField = new CustomTextField(20, 15,15);
+        nameField.setText(namePlaceholder);
+        nameField.setForeground(Color.GRAY);
+        nameField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (nameField.getText().equals(namePlaceholder)) {
+                    nameField.setText("");
+                    nameField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (nameField.getText().isEmpty()) {
+                    nameField.setText(namePlaceholder);
+                    nameField.setForeground(Color.GRAY);
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                }
+            }
+        });
+        nameField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (nameField.getText().equals(namePlaceholder)) {
+                    nameField.setText("");
+                    nameField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (nameField.getText().isEmpty()) {
+                    nameField.setText(namePlaceholder);
+                    nameField.setForeground(Color.GRAY);
+                }
+            }
+        });
         formPanel.add(nameField);
 
         formPanel.add(new JLabel("Age:"));
-        ageField = new JTextField();
+        ageField = new CustomTextField(20, 15,15);
+        ageField.setText(agePlaceholder);
+        ageField.setForeground(Color.GRAY);
+        ageField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (ageField.getText().equals(agePlaceholder)) {
+                    ageField.setText("");
+                    ageField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (ageField.getText().isEmpty()) {
+                    ageField.setText(agePlaceholder);
+                    ageField.setForeground(Color.GRAY);
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                }
+            }
+        });
+        ageField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (ageField.getText().equals(agePlaceholder)) {
+                    ageField.setText("");
+                    ageField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (ageField.getText().isEmpty()) {
+                    ageField.setText(agePlaceholder);
+                    ageField.setForeground(Color.GRAY);
+                }
+            }
+        });
         formPanel.add(ageField);
 
         formPanel.add(new JLabel("Class:"));
@@ -50,7 +213,89 @@ public class Student extends JPanel {
         formPanel.add(classComboBox);
 
         formPanel.add(new JLabel("Contact Info:"));
-        contactField = new JTextField();
+        contactField = new CustomTextField(20, 15, 15);
+        prefix = "+254";
+        contactPlaceholder = "eg...798201461";
+        contactField.setText(prefix + " " + contactPlaceholder);
+        contactField.setForeground(Color.GRAY);
+
+        contactField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (contactField.getText().equals(prefix + " " + contactPlaceholder)) {
+                    contactField.setText(prefix + " ");
+                    contactField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (contactField.getText().equals(prefix + " ")) {
+                    contactField.setText(prefix + " " + contactPlaceholder);
+                    contactField.setForeground(Color.GRAY);
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                }
+            }
+        });
+
+        contactField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (contactField.getText().equals(prefix + " " + contactPlaceholder)) {
+                    contactField.setText(prefix + " ");
+                    contactField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (contactField.getText().equals(prefix + " ")) {
+                    contactField.setText(prefix + " " + contactPlaceholder);
+                    contactField.setForeground(Color.GRAY);
+                }
+            }
+        });
+        contactField.getDocument().addDocumentListener(new DocumentListener() {
+            private boolean isAdjusting = false;
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                enforcePrefix();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                enforcePrefix();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                enforcePrefix();
+            }
+
+            private void enforcePrefix() {
+                if (isAdjusting) return;
+
+                SwingUtilities.invokeLater(() -> {
+                    String text = contactField.getText();
+                    if (!text.startsWith(prefix)) {
+                        isAdjusting = true;
+                        contactField.setText(prefix + " ");
+                        contactField.setCaretPosition(contactField.getText().length());
+                        isAdjusting = false;
+                    }
+                });
+            }
+        });
         formPanel.add(contactField);
 
         buttonPanel = new JPanel(new FlowLayout());
@@ -72,7 +317,7 @@ public class Student extends JPanel {
         add(scrollPane, BorderLayout.SOUTH);
 
         searchPanel = new JPanel(new BorderLayout());
-        searchBar = new SearchBar(20);
+        searchBar  = new SearchBar(20);
 
         // Use DocumentListener to monitor text changes in the search bar
         searchBar.getDocument().addDocumentListener(new DocumentListener() {
@@ -166,6 +411,7 @@ public class Student extends JPanel {
     public void populateClassComboBox() {
         StudentDAO studentDAO = new StudentDAO();
         List<String> classes = studentDAO.getAllClasses();
+        classComboBox.removeAllItems(); // Clear existing items
         for (String className : classes) {
             classComboBox.addItem(className);
         }
@@ -220,9 +466,15 @@ public class Student extends JPanel {
     }
 
     public void clearFields() {
-        idField.setText("");
-        nameField.setText("");
-        ageField.setText("");
-        contactField.setText("");
+        idField.setText(idPlaceholder);
+        idField.setForeground(Color.GRAY);
+        nameField.setText(namePlaceholder);
+        nameField.setForeground(Color.GRAY);
+        ageField.setText(agePlaceholder);
+        ageField.setForeground(Color.GRAY);
+        classComboBox.setSelectedItem(-1);
+        contactField.setText(prefix + " " + contactPlaceholder);
+        contactField.setForeground(Color.GRAY);
+
     }
 }

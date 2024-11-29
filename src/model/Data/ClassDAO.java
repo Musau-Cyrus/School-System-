@@ -17,7 +17,7 @@ public class ClassDAO {
     private static final String PASSWORD = "";
 
     public void insertClass(String classId, String className, String classTeacher) {
-        String query = "INSERT INTO class (`class_id`, `class_name`, `class_teacher`) VALUES (?, ?, ?)";
+        String query = "INSERT INTO class (`class`, `class_name`, `class_teacher`) VALUES (?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, classId);
@@ -38,7 +38,7 @@ public class ClassDAO {
              PreparedStatement statement = conn.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                String classId = resultSet.getString("class_id");
+                String classId = resultSet.getString("class");
                 String className = resultSet.getString("class_name");
                 String classTeacher = resultSet.getString("class_teacher");
                 classes.add(new Class(classId, className, classTeacher));
@@ -49,20 +49,27 @@ public class ClassDAO {
         return classes;
     }
 
-
-        public List<String> getAllClassNames() {
-            List<String> classNames = new ArrayList<>();
-            String query = "SELECT class_name FROM class";
-            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                 PreparedStatement statement = conn.prepareStatement(query);
-                 ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    classNames.add(resultSet.getString("class_name"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return classNames;
+    public void addClass(String classId) {
+        String query = "INSERT INTO class (class) VALUES (?)";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, classId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
     }
+
+    public void deleteClass(String classId) {
+        String query = "DELETE FROM class WHERE class = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, classId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        }
+ }
+}  // End of ClassDAO class

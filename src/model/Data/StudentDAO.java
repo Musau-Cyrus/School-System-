@@ -76,6 +76,26 @@ public class StudentDAO {
         }
     }
 
+    public void updateStudent(String id, String name, String age, String studentClass, String contactInfo) {
+        String sql = "UPDATE student SET student_name = ?, student_age = ?, student_class = ?, contact_info = ? WHERE student_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, age);
+            pstmt.setString(3, studentClass);
+            pstmt.setString(4, contactInfo);
+            pstmt.setString(5, id);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
     public List<String> getAllClasses() {
         List<String> classes = new ArrayList<>();
         String query = "SELECT DISTINCT class FROM class";

@@ -19,11 +19,11 @@ public class CustomButton extends JButton {
         setOpaque(true);
 
         addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//                setBackground(hoverBackgroundColor);
-//            }
-//
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBackground(hoverBackgroundColor);
+            }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 setBackground(originalBackgroundColor);

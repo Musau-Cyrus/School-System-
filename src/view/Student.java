@@ -300,6 +300,7 @@ public class Student extends JPanel {
 
         buttonPanel = new JPanel(new FlowLayout());
         save = new JButton("SAVE");
+
         buttonPanel.add(save);
         update = new JButton("UPDATE");
         buttonPanel.add(update);
@@ -373,10 +374,38 @@ public class Student extends JPanel {
         return ageField.getText();
     }
 
+    // In the Student class
+
+    public void setId(String id) {
+        idField.setText(id);
+        idField.setForeground(Color.BLACK);
+    }
+
+    public void setName(String name) {
+        nameField.setText(name);
+        nameField.setForeground(Color.BLACK);
+    }
+
+    public void setAge(String age) {
+        ageField.setText(age);
+        ageField.setForeground(Color.BLACK);
+    }
+
+    public void setStudentClass(String studentClass) {
+        classComboBox.setSelectedItem(studentClass);
+    }
+
+    public void setContactInfo(String contactInfo) {
+        contactField.setText(prefix + " " + contactInfo);
+        contactField.setForeground(Color.BLACK);
+    }
+
 
     public String getStudentClass() {
         return (String) classComboBox.getSelectedItem();
     }
+
+
 
 
     public String getContactInfo() {
@@ -407,6 +436,23 @@ public class Student extends JPanel {
 
     public String getStudentIdAt(int row) {
         return (String) studentTable.getValueAt(row, 0);
+    }
+    // In the Student class
+
+    public String getNameAt(int row) {
+        return (String) studentTable.getValueAt(row, 1);
+    }
+
+    public String getAgeAt(int row) {
+        return (String) studentTable.getValueAt(row, 2);
+    }
+
+    public String getClassAt(int row) {
+        return (String) studentTable.getValueAt(row, 3);
+    }
+
+    public String getContactInfoAt(int row) {
+        return (String) studentTable.getValueAt(row, 4);
     }
     public void populateClassComboBox() {
         StudentDAO studentDAO = new StudentDAO();
@@ -477,4 +523,6 @@ public class Student extends JPanel {
         contactField.setForeground(Color.GRAY);
 
     }
+
+
 }
